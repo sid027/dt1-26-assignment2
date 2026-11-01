@@ -1,0 +1,17 @@
+# YOUR WORK: how your agent behaves. Read when the web page starts.
+# (What the page looks like is in frontend/use_case.py.)
+
+# The model that does the thinking. Any OpenRouter model that supports tools works:
+# https://openrouter.ai/models?supported_parameters=tools
+# The model choice drives the KPIs: average cost and average speed per query.
+# The default model below misses the KPI targets. Replace it with an appropriate one.
+model ="anthropic/claude-haiku-5.5"
+
+# Safety limit: the agent stops after this many tool calls for one message.
+max_steps = 10
+
+# 0 = predictable, 1 = creative.
+temperature = 0.2
+
+# Tools that change something. The agent must get the user's approval before using them.
+approval_required = ["save_plan"]

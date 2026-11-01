@@ -1,0 +1,25 @@
+# Starts the whole system:  docker compose up --build
+services:
+  mcp_server:
+    build: ./mcp_server
+    volumes:
+      - data:/data
+    restart: unless-stopped
+    # No "ports": the tools are only reachable from inside this system, not from the internet.
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "8501:8501"
+    env_file: .env
+    environment:
+      MCP_SERVER_URL: http://mcp_server:8000/mcp
+    depends_on:
+      mcp_server:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  data:
